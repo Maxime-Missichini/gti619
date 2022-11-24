@@ -40,4 +40,23 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    /**
+     * @var mixed
+     */
+    private $role;
+
+    public function isAdmin(): bool
+    {
+        return $this->role == "Admin";
+    }
+
+    public function isResidentiel(): bool
+    {
+        return $this->role == "Residentiel";
+    }
+
+    public function isAffaire(): bool
+    {
+        return $this->role == "Affaire";
+    }
 }

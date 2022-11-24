@@ -22,7 +22,21 @@
     </head>
     <body class="antialiased">
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 sm:items-center py-4 sm:pt-0">
-           Welcome !
+            <p class="font-semibold">Bienvenue sur GTI619 !</p>
+            <div>
+                <ul>
+                    <li>Authentification</li>
+                    @can('see-admin')
+                    <li>Administration</li>
+                    @endcan
+                    @can('see-residentiel')
+                    <li>Clients résidentiels</li>
+                    @endcan
+                    @can('see-affaire')
+                    <li>Clients d'affaire</li>
+                    @endcan
+                </ul>
+            </div>
         </div>
     </body>
 </html>

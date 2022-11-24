@@ -17,7 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('client', ClientController::class);
+Route::resource('client/residentiel', ClientController::class);
+Route::resource('client/affaire', ClientController::class);
+
 Route::get('client/{id}/edit', 'ClientController@edit')->name('client.edit');
 Route::put('client/{id}', 'ClientController@update')->name('client.update');
 Route::delete('client/{id}', 'ClientController@destroy')->name('client.destroy');

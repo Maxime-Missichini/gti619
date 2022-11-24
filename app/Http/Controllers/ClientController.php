@@ -19,35 +19,6 @@ class ClientController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('client.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    { $this->validate($request, [
-        'first_name'    =>  'required',
-        'last_name'     =>  'required'
-    ]);
-    $client = new client([
-        'first_name'    =>  $request->get('first_name'),
-        'last_name'     =>  $request->get('last_name')
-    ]);
-    $client->save();
-    return redirect()->route('client.index')->with('success', 'Client ajouté');
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -56,50 +27,5 @@ class ClientController extends Controller
     public function show($id)
     {
         //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $client = Client::find($id);
-        return view('client.edit', compact('client', 'id'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $this->validate($request, [
-            'first_name'    =>  'required',
-            'last_name'     =>  'required'
-        ]);
-        $client = client::find($id);
-        $client->first_name = $request->get('first_name');
-        $client->last_name = $request->get('last_name');
-        $client->save();
-        return redirect()->route('client.index')->with('success', 'Client modifié');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $client = client::find($id);
-        $client->delete();
-        return redirect()->route('client.index')->with('success', 'Client supprimé');
     }
 }
