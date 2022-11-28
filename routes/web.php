@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
 /*
@@ -14,12 +15,10 @@ use App\Http\Controllers\ClientController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
-Route::resource('client/residentiel', ClientController::class);
-Route::resource('client/affaire', ClientController::class);
+Route::resource('/client/residentiel', ClientController::class);
+Route::resource('/client/affaire', ClientController::class);
 
-Route::get('client/{id}/edit', 'ClientController@edit')->name('client.edit');
-Route::put('client/{id}', 'ClientController@update')->name('client.update');
-Route::delete('client/{id}', 'ClientController@destroy')->name('client.destroy');
+Auth::routes();
