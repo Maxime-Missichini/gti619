@@ -15,19 +15,19 @@ $valuestore=Valuestore::make('settings.json');
             <input name= "try" value="{{ $valuestore->get('password_max_try', 3) }}" required>
         </div>
         <div>
-            <label for="delay">Delay between attempts:</label>
-            <input name= "delay" value="{{ $valuestore->get('password_attempt_delay', 60) }}" required>
+            <label for="delay">Delay between attempts (min):</label>
+            <input name= "delay" value="{{ $valuestore->get('password_attempt_delay', 1) }}" required>
         </div>
         <div>
             <label for="reset">Password change:</label>
-            <input name= "reset" value="{{ $valuestore->get('password_reset', 'yes')}}" required>
+            <input name= "reset" value="{{ $valuestore->get('password_reset', 'true')}}" required>
         </div>
         <div>
             <label for="length">Password minimum length:</label>
             <input name= "length" value="{{ $valuestore->get('password_minimum_length', 8) }}" required>
         </div>
         <div>
-            <label for="allowed">Password allowed characters:</label>
+            <label for="allowed">Password required characters (all, mixed, alphanumeric):</label>
             <input name= "allowed" value="{{ $valuestore->get('password_characters_allowed', 'all')}}" required>
         </div>
         <div>

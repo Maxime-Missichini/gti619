@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password;
+use Spatie\Valuestore\Valuestore;
 
 class RegisterController extends Controller
 {
@@ -49,11 +51,37 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        $valuestore = Valuestore::make('settings.json');
+
+        if($valuestore->get('password_characters_allowed','all') == 'alphanumeric') {
+            error_log('alpha');
+            return Validator::make($data, [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'confirmed',
+                    Password::min($valuestore->get('password_minimum_length', 8))
+                        ->letters()->numbers()
+                ],
+            ]);
+        }elseif($valuestore->get('password_characters_allowed','all') == 'all'){
+            return Validator::make($data, [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'confirmed',
+                    Password::min($valuestore->get('password_minimum_length', 8))
+                        ->mixedCase()->letters()->numbers()->symbols()
+                ],
+            ]);
+        }else{
+            return Validator::make($data, [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'confirmed',
+                    Password::min($valuestore->get('password_minimum_length', 8))
+                        ->mixedCase()->letters()->numbers()
+                ],
+            ]);
+        }
     }
 
     /**

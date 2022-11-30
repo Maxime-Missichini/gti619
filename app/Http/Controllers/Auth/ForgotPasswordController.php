@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Spatie\Valuestore\Valuestore;
 
 class ForgotPasswordController extends Controller
 {
@@ -19,4 +20,15 @@ class ForgotPasswordController extends Controller
     */
 
     use SendsPasswordResetEmails;
+
+    public function showLinkRequestForm()
+    {
+        $valuestore = Valuestore::make('settings.json');
+        if ($valuestore->get('password_reset','true') == 'true') {
+            error_log($valuestore->get('password_reset'));
+            return view('auth.passwords.email');
+        }else{
+            return redirect('home');
+        }
+    }
 }
