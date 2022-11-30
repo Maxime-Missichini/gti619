@@ -23,11 +23,11 @@ Route::get('/home', function () {
 });
 
 Route::get('/affaire', function () {
-    return view('affaire');
+    return view('client.affaire');
 })->middleware('can:see-affaire');
 
 Route::get('/residentiel', function () {
-    return view('residentiel');
+    return view('client.residentiel');
 })->middleware('can:see-residentiel');
 
 Route::get('/admin', function () {
