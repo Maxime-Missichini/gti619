@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Spatie\Valuestore\Valuestore;
 
 class LoginController extends Controller
 {
@@ -28,6 +29,9 @@ class LoginController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
+    protected $maxAttempts = 3; // Default is 5
+    protected $decayMinutes = 2; // Default is 1
+
     /**
      * Create a new controller instance.
      *
@@ -35,6 +39,9 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        $valuestore = Valuestore::make('settings.json');
+        $this->maxAttempts = $valuestore['password_max_try'];
+        $this->decayMinutes = $valuestore['password_attempt_delay'];
         $this->middleware('guest')->except('logout');
     }
 }
