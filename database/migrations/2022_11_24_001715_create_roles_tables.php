@@ -18,8 +18,6 @@ class CreateRolesTables extends Migration
             $table->string('name');
         });
 
-        /*
-
         Schema::create('abilities', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
@@ -56,7 +54,6 @@ class CreateRolesTables extends Migration
                 ->on('roles')
                 ->onDelete('Cascade');
         });
-        */
     }
 
     /**
@@ -68,11 +65,9 @@ class CreateRolesTables extends Migration
     {
         Schema::table('roles', function (Blueprint $table) {
             Schema::dropIfExists('roles');
-            /*
             Schema::dropIfExists('abilities');
             Schema::dropIfExists('role_user');
             Schema::dropIfExists('ability_role');
-            */
         });
     }
 }

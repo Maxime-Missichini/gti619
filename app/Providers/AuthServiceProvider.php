@@ -26,16 +26,16 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('see-admin', function (User $user){
-            return $user->isAdmin();
+        Gate::define('see-admin', function (User $user) {
+           return $user->abilities()->contains('see-admin');
         });
 
-        Gate::define('see-residentiel', function (User $user){
-            return $user->isResidentiel();
+        Gate::define('see-affaire', function (User $user) {
+            return $user->abilities()->contains('see-affaire');
         });
 
-        Gate::define('see-affaire', function (User $user){
-            return $user->isAffaire();
+        Gate::define('see-residentiel', function (User $user) {
+            return $user->abilities()->contains('see-residentiel');
         });
     }
 }

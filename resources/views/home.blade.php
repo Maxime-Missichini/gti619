@@ -27,5 +27,22 @@
                 @endauth
             </div>
         @endif
+            @auth
+                @can("see-admin")
+                    <div>
+                        <a href="{{ url('/admin') }}">Admin panel</a>
+                    </div>
+                @endcan
+                @can("see-residentiel")
+                        <div>
+                            <a href="{{ url('/residentiel') }}">Clients residentiels</a>
+                        </div>
+                    @endcan
+                    @can("see-affaire")
+                        <div>
+                            <a href="{{ url('/affaire') }}">Clients d'affaires</a>
+                        </div>
+                    @endcan
+            @endauth
     </div>
 @endsection

@@ -22,4 +22,16 @@ Route::get('/home', function () {
     return view('home');
 });
 
+Route::get('/affaire', function () {
+    return view('affaire');
+})->middleware('can:see-affaire');
+
+Route::get('/residentiel', function () {
+    return view('residentiel');
+})->middleware('can:see-residentiel');
+
+Route::get('/admin', function () {
+    return view('admin');
+})->middleware('can:see-admin');
+
 Auth::routes();

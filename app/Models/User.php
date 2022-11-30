@@ -45,18 +45,19 @@ class User extends Authenticatable
      */
     private $role;
 
-    public function isAdmin(): bool
+    public function roles()
     {
-        return $this->role == "Admin";
+        return $this->belongsToMany(Role::class);
     }
 
-    public function isResidentiel(): bool
+    public function assignRole($role)
     {
-        return $this->role == "Residentiel";
+        $this->role = $role;
+        $this->roles()->save($role);
     }
 
-    public function isAffaire(): bool
+    public function abilities()
     {
-        return $this->role == "Affaire";
+        return $this->roles->map->abilities->flatten()->pluck('name')->unique();
     }
 }
