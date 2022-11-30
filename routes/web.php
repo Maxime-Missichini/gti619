@@ -18,7 +18,8 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::resource('/client/residentiel', ClientController::class);
-Route::resource('/client/affaire', ClientController::class);
+Route::get('/home', function () {
+    return view('home');
+});
 
 Auth::routes();
