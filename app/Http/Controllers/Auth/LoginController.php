@@ -81,7 +81,7 @@ class LoginController extends Controller
                 if ($request->hasSession()) {
                     $request->session()->put('auth.password_confirmed_at', time());
                 }
-                DB::table('users_login')->delete($userId);
+                DB::table('users_login')->where('user_id',$userId)->delete();
                 return $this->sendLoginResponse($request);
             }
 

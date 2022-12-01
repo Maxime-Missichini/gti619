@@ -36,4 +36,6 @@ Route::get('/admin', function () {
     return view('admin');
 })->middleware('can:see-admin');
 
+Route::get('/caddy-check', 'App\Http\Controllers\CaddyController@check');
+
 Auth::routes();
