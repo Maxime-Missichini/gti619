@@ -28,9 +28,10 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
-
-    protected $maxAttempts = 3; // Default is 5
+    protected $allowedAttempts = 5;
+    protected $maxAttempts = 1; // Default is 5
     protected $decayMinutes = 2; // Default is 1
+    protected $attempts = 0;
 
     /**
      * Create a new controller instance.
@@ -40,7 +41,7 @@ class LoginController extends Controller
     public function __construct()
     {
         $valuestore = Valuestore::make('settings.json');
-        $this->maxAttempts = $valuestore['password_max_try'];
+        $this->allowedAttempts = $valuestore['password_max_try'];
         $this->decayMinutes = $valuestore['password_attempt_delay'];
         $this->middleware('guest')->except('logout');
     }
