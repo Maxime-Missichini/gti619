@@ -24,9 +24,10 @@ Route::get('/home', function () {
 
 Route::get('/password/change', function (){
     return view('auth.passwords.change');
-});
+})->middleware('auth');
 
-Route::post('/password/change', 'App\Http\Controllers\Auth\ResetPasswordController@updateLogged');
+Route::post('/password/change', 'App\Http\Controllers\Auth\ResetPasswordController@updateLogged')
+    ->middleware('auth');
 
 Route::post('/config', PostController::class)->middleware('can:see-admin');
 
