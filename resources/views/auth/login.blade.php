@@ -45,6 +45,35 @@
                                 </div>
                             </div>
 
+                            <div>
+                                <label>{{ __('Challenge') }}</label>
+                                @php
+                                    $size = 3*3;
+                                    $challenge = [random_int(0, $size),random_int(0, $size),random_int(0, $size)];
+                                    $stringChallenge = collect($challenge)->implode(';');
+                                @endphp
+                                @foreach($challenge as $pos)
+                                    <h3>{{ $pos }}</h3>
+                                @endforeach
+                            </div>
+
+                            <input type="hidden" name="question" value="{{ $stringChallenge }}">
+
+                            <div>
+                                <label for="challenge" >{{ __('Challenge response') }}</label>
+                                <div>
+                                    <input id="challenge" type="text"
+                                           class="form-control @error('challenge') is-invalid @enderror" name="challenge"
+                                           required maxlength="3">
+
+                                    @error('challenge')
+                                    <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <div class="row mb-3">
                                 <div class="col-md-6 offset-md-4">
                                     <div class="form-check">

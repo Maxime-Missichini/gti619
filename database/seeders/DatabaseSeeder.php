@@ -62,18 +62,21 @@ class DatabaseSeeder extends Seeder
             'name' => 'Administrateur',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('secret'),
+            'grid_card' => User::generateGridCard(),
         ]);
 
         DB::table('users')->insert([
             'name' => 'Utilisateur1',
             'email' => 'utilisateur1@gmail.com',
             'password' => bcrypt('secret'),
+            'grid_card' => User::generateGridCard(),
         ]);
 
         DB::table('users')->insert([
             'name' => 'Utilisateur2',
             'email' => 'utilisateur2@gmail.com',
             'password' => bcrypt('secret'),
+            'grid_card' => User::generateGridCard(),
         ]);
 
         $admin = User::where('name','Administrateur')->first();

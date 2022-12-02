@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->string('grid_card');
         });
 
         Schema::create('users_login', function (Blueprint $table) {

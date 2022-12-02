@@ -49,6 +49,23 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    public function checkGridCard($response, $userId, $challenge)
+    {
+        $gridCard = DB::table('users')->select('grid_card')->where('id', $userId)
+            ->first()->grid_card;
+        $arrayGrid = str_split($gridCard);
+        $arrayResponse = str_split($response);
+        $arrayChallenge = explode(';', $challenge);
+        $counter = 0;
+        foreach($arrayChallenge as $pos){
+            if($arrayResponse[$counter] != $arrayGrid[$pos-1]){
+                return false;
+            }
+            $counter++;
+        }
+        return true;
+    }
+
 
     public function login(Request $request)
     {
@@ -78,14 +95,30 @@ class LoginController extends Controller
                 return $this->sendLockoutResponse($request);
             }
 
+            if(!$this->checkGridCard($request->challenge, $userId, $request->question)) {
+
+                // If the login attempt was unsuccessful we will increment the number of attempts
+                // to login and redirect the user back to the login form. Of course, when this
+                // user surpasses their maximum number of attempts they will get locked out.
+                Log::info('User with id '.$userId.' failed to login');
+                $this->incrementLoginAttempts($request);
+                $attempts++;
+                DB::table('users_login')->update(['user_id' => $userId, 'attempts' => $attempts]);
+
+                return throw ValidationException::withMessages([
+                    $this->username() => [trans('auth.challenge')],
+                ]);
+            }
+
             if ($this->attemptLogin($request)) {
                 if ($request->hasSession()) {
                     $request->session()->put('auth.password_confirmed_at', time());
                 }
-                DB::table('users_login')->where('user_id',$userId)->delete();
-                Log::info('User with id '.$userId.' successfully logged in');
+                DB::table('users_login')->where('user_id', $userId)->delete();
+                Log::info('User with id ' . $userId . ' successfully logged in');
                 return $this->sendLoginResponse($request);
             }
+
 
             // If the login attempt was unsuccessful we will increment the number of attempts
             // to login and redirect the user back to the login form. Of course, when this
