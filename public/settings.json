@@ -1,1 +1,1 @@
-{"password_max_try":"3","password_minimum_length":"8","password_reset":"true","password_characters_allowed":"mixed","password_reusable":"5","password_attempt_delay":"1"}
+{"password_max_try":"3","password_minimum_length":"8","password_reset":"true","password_characters_allowed":"alphanumeric","password_reusable":"5","password_attempt_delay":"1"}

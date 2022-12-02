@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
@@ -125,5 +126,48 @@ class ResetPasswordController extends Controller
         return $response == \Illuminate\Support\Facades\Password::PASSWORD_RESET
             ? $this->sendResetResponse($request, $response)
             : $this->sendResetFailedResponse($request, $response);
+    }
+
+    public function updateLogged(Request $request)
+    {
+        $valuestore = Valuestore::make('settings.json');
+        if($valuestore->get('password_characters_allowed','all') == 'alphanumeric') {
+            $request->validate([
+                'old_password' => 'required',
+                'password' => ['required', 'confirmed',
+                    Password::min($valuestore->get('password_minimum_length', 8))
+                        ->letters()->numbers(), new PasswordRule($request->email)],
+            ], $this->validationErrorMessages());
+        }elseif($valuestore->get('password_characters_allowed','all') == 'all'){
+            $request->validate([
+                'old_password' => 'required',
+                'password' => ['required', 'confirmed',
+                    Password::min($valuestore->get('password_minimum_length', 8))
+                        ->mixedCase()->letters()->numbers()->symbols(), new PasswordRule($request->email)],
+            ], $this->validationErrorMessages());
+        }else{
+            $request->validate([
+                'old_password' => 'required',
+                'password' => ['required', 'confirmed',
+                    Password::min($valuestore->get('password_minimum_length', 8))
+                        ->mixedCase()->letters()->numbers(), new PasswordRule($request->email)],
+            ], $this->validationErrorMessages());
+        }
+
+        $userPassword = DB::table('users')->select('password')->where('email', $request->email)
+            ->first()->password;
+
+        if (!Hash::check($request->old_password, $userPassword)) {
+            $response = \Illuminate\Support\Facades\Password::INVALID_TOKEN;
+            return $this->sendResetFailedResponse($request, $response);
+        }
+
+        $user = User::where('email', $request->email)->first();
+
+        $this->resetPassword($user, $request->password);
+
+        $response = \Illuminate\Support\Facades\Password::PASSWORD_RESET;
+
+        return $this->sendResetResponse($request, $response);
     }
 }

@@ -22,6 +22,12 @@ Route::get('/home', function () {
     return view('home');
 });
 
+Route::get('/password/change', function (){
+    return view('auth.passwords.change');
+});
+
+Route::post('/password/change', 'App\Http\Controllers\Auth\ResetPasswordController@updateLogged');
+
 Route::post('/config', PostController::class)->middleware('can:see-admin');
 
 Route::get('/affaire', function () {

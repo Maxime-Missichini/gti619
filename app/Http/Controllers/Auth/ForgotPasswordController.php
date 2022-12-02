@@ -27,7 +27,7 @@ class ForgotPasswordController extends Controller
         if ($valuestore->get('password_reset','true') == 'true') {
             return view('auth.passwords.email');
         }else{
-            return redirect('home');
+            return redirect('home')->withErrors('Password reset not permitted');
         }
     }
 }

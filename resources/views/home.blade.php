@@ -16,6 +16,7 @@
                            onclick="event.preventDefault();
                            document.getElementById('logout-form').submit()">Logout</a>
                     </div>
+                    <div><a href="{{ url('/password/change') }}">Change password</a></div>
                     <form id="logout-form" action="{{ url('/logout') }}" method="POST">
                         @csrf
                     </form>
