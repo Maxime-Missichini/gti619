@@ -83,5 +83,17 @@ class DatabaseSeeder extends Seeder
         $admin->assignRole($administrateur);
         $user1->assignRole($prepose_residentiel);
         $user2->assignRole($prepose_affaire);
+
+        DB::table('clients')->insert([
+            'first_name' => 'Jean',
+            'last_name' => 'Pierre',
+            'type' => 'affaire',
+        ]);
+
+        DB::table('clients')->insert([
+            'first_name' => 'André',
+            'last_name' => 'Ciseaux',
+            'type' => 'residentiel',
+        ]);
     }
 }

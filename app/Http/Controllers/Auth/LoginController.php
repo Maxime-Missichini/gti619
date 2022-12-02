@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Spatie\Valuestore\Valuestore;
 
@@ -82,12 +83,14 @@ class LoginController extends Controller
                     $request->session()->put('auth.password_confirmed_at', time());
                 }
                 DB::table('users_login')->where('user_id',$userId)->delete();
+                Log::info('User with id '.$userId.' successfully logged in');
                 return $this->sendLoginResponse($request);
             }
 
             // If the login attempt was unsuccessful we will increment the number of attempts
             // to login and redirect the user back to the login form. Of course, when this
             // user surpasses their maximum number of attempts they will get locked out.
+            Log::info('User with id '.$userId.' failed to login');
             $this->incrementLoginAttempts($request);
             $attempts++;
             DB::table('users_login')->update(['user_id' => $userId, 'attempts' => $attempts]);

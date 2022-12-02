@@ -64,7 +64,7 @@ class ResetPasswordController extends Controller
 
         $user->save();
 
-        Log::info('User id'.$userId.' changed his password');
+        Log::info('User with id '.$userId.' changed his password');
 
         event(new PasswordReset($user));
 
