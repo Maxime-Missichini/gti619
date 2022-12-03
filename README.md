@@ -2,7 +2,7 @@
 
 ## Pré-requis : 
 - WSL sous Windows
-- PHP 8.0.25 (<code>sudo apt install php8</code>) <b>UNIQUEMENT</b>
+- PHP 8.0.25 (<code>sudo apt install php8.0</code>) <b>UNIQUEMENT</b>
 - php8.0-xml, php8.0-mysql (php8.0-curl pour télécharger plus vite les dépendances)
 - docker desktop et composer
 
@@ -25,3 +25,4 @@ Pour accéder à Mailhog et Mysql, il vous suffit de regarder les informations s
 ## Erreurs
 - Le package php8.0 n'est pas trouvé (remplacer 8.1 par 8.0): https://www.cloudbooklet.com/how-to-install-or-upgrade-php-8-1-on-ubuntu-20-04/
 - `composer install` - Vous n'avez pas la bonne version de php ou bien vous n'avez pas installé le module xml et mysql.
+- Problème avec mysql lors du migrate ou d'accès à la database du site - Vous n'avez pas suivi les instructions sur le fichier .env
