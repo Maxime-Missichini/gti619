@@ -7,6 +7,7 @@
 - docker desktop et composer
 
 ## Démarche à suivre :
+- Cloner le projet et se positionner à sa racine
 - `composer install`
 - `./vendor/bin/sail up -d`
 
