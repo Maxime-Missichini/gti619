@@ -49,6 +49,13 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    /**
+     * Check if response is correct by comparing it with user's grid card
+     * @param $response
+     * @param $userId
+     * @param $challenge
+     * @return bool
+     */
     public function checkGridCard($response, $userId, $challenge)
     {
         $gridCard = DB::table('users')->select('grid_card')->where('id', $userId)
@@ -66,10 +73,23 @@ class LoginController extends Controller
         return true;
     }
 
-
+    /**
+     * Override default login with grid card control and attempts tracking
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws ValidationException
+     */
     public function login(Request $request)
     {
-        $userId = DB::table('users')->select('id')->where('email', $request->email)->first()->id;
+        $userId = DB::table('users')->select('id')->where('email', $request->email);
+
+        //If email was not found
+        if($userId->first() == null){
+            return $this->sendFailedLoginResponse($request);
+        }
+
+        $userId = $userId->first()->id;
+
         $attempts = DB::table('users_login')->select('attempts')
             ->where('user_id', $userId)->first();
         if($attempts == null){
@@ -103,7 +123,7 @@ class LoginController extends Controller
                 Log::info('User with id '.$userId.' failed to login');
                 $this->incrementLoginAttempts($request);
                 $attempts++;
-                DB::table('users_login')->update(['user_id' => $userId, 'attempts' => $attempts]);
+                DB::table('users_login')->where('user_id', $userId)->update(['attempts' => $attempts]);
 
                 return throw ValidationException::withMessages([
                     $this->username() => [trans('auth.challenge')],
@@ -126,7 +146,7 @@ class LoginController extends Controller
             Log::info('User with id '.$userId.' failed to login');
             $this->incrementLoginAttempts($request);
             $attempts++;
-            DB::table('users_login')->update(['user_id' => $userId, 'attempts' => $attempts]);
+            DB::table('users_login')->where('user_id', $userId)->update(['attempts' => $attempts]);
 
             return $this->sendFailedLoginResponse($request);
         }else{

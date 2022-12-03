@@ -1,5 +1,7 @@
 @extends('layout')
-
+@php
+use App\Models\User;
+@endphp
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -48,8 +50,8 @@
                             <div>
                                 <label>{{ __('Challenge') }}</label>
                                 @php
-                                    $size = 3*3;
-                                    $challenge = [random_int(0, $size),random_int(0, $size),random_int(0, $size)];
+                                    $size = User::$gridSize;
+                                    $challenge = [random_int(1, $size),random_int(1, $size),random_int(1, $size)];
                                     $stringChallenge = collect($challenge)->implode(';');
                                 @endphp
                                 @foreach($challenge as $pos)

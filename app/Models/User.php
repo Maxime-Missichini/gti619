@@ -47,6 +47,8 @@ class User extends Authenticatable
      */
     private $role;
 
+    static public $gridSize = 9;
+
     public function roles()
     {
         return $this->belongsToMany(Role::class);
@@ -65,7 +67,7 @@ class User extends Authenticatable
 
     static public function generateGridCard()
     {
-        $size = 3*3;
+        $size = User::$gridSize;
         $gridCard = Str::random($size);
         error_log($gridCard);
         return $gridCard;
