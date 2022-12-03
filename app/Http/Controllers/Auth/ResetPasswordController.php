@@ -35,15 +35,14 @@ class ResetPasswordController extends Controller
     use ResetsPasswords;
 
     /**
-     * Where to redirect users after resetting their password.
-     *
+     * Where to redirect users after resetting their passwords
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Reset the given user's password.
-     *
+     * Override de la fonction d'origine pour y ajouter l'historique des mots de passe et du logging
      * @param  CanResetPassword  $user
      * @param  string  $password
      * @return void
@@ -73,8 +72,7 @@ class ResetPasswordController extends Controller
     }
 
     /**
-     * Get the password reset validation rules.
-     *
+     * Override la fonction rules pour y ajouter notre PasswordRule
      * @return array
      */
     protected function rules(Request $request)
@@ -107,6 +105,12 @@ class ResetPasswordController extends Controller
         }
     }
 
+    /**
+     * Override de la fonction reset pour passer la requête à la fonction rules
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function reset(Request $request)
     {
         $request->validate($this->rules($request), $this->validationErrorMessages());
@@ -128,8 +132,15 @@ class ResetPasswordController extends Controller
             : $this->sendResetFailedResponse($request, $response);
     }
 
+    /**
+     * Change le mot de passe de l'utilisateur authentifié
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function updateLogged(Request $request)
     {
+        //Régles sur le mot de passe
         $valuestore = Valuestore::make('settings.json');
         if($valuestore->get('password_characters_allowed','all') == 'alphanumeric') {
             $request->validate([
@@ -157,6 +168,7 @@ class ResetPasswordController extends Controller
         $userPassword = DB::table('users')->select('password')->where('email', $request->email)
             ->first()->password;
 
+        //Contrôle de la valeur du mot de passe renseigné (réauthentification)
         if (!Hash::check($request->old_password, $userPassword)) {
             $response = \Illuminate\Support\Facades\Password::INVALID_TOKEN;
             return $this->sendResetFailedResponse($request, $response);

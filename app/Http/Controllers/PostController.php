@@ -6,6 +6,10 @@ use Spatie\Valuestore\Valuestore;
 
 class PostController extends Controller
 {
+    /**
+     * Controller qui gère la mise à jour des paramètres de sécurité du site via valuestore (un fichier json de config)
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function __invoke()
     {
         $valuestore = Valuestore::make('settings.json');

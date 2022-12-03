@@ -32,13 +32,23 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+
+    /**
+     * Le nombre de tentative maximum avant blocage du compte
+     * @var int|mixed
+     */
     protected $allowedAttempts = 5;
+
+    /**
+     * Nombre de tentatives avant attente d'une durée de decayMinutes avant la prochaine tentative
+     * @var int
+     */
     protected $maxAttempts = 1; // Default is 5
     protected $decayMinutes = 2; // Default is 1
 
     /**
      * Create a new controller instance.
-     *
+     * Ici on extrait les paramètres de notre configuration
      * @return void
      */
     public function __construct()
@@ -50,7 +60,7 @@ class LoginController extends Controller
     }
 
     /**
-     * Check if response is correct by comparing it with user's grid card
+     * Compare la réponse de l'utilisateur au challenge et sa grid card
      * @param $response
      * @param $userId
      * @param $challenge
@@ -74,7 +84,7 @@ class LoginController extends Controller
     }
 
     /**
-     * Override default login with grid card control and attempts tracking
+     * Override le login par défaut avec le contrôle de la grid card et la trace des tentatives de login
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws ValidationException
@@ -83,13 +93,14 @@ class LoginController extends Controller
     {
         $userId = DB::table('users')->select('id')->where('email', $request->email);
 
-        //If email was not found
+        //Si l'email n'est pas trouvé dans la base de donnée
         if($userId->first() == null){
             return $this->sendFailedLoginResponse($request);
         }
 
         $userId = $userId->first()->id;
 
+        //Comptage manuel du nombre de tentatives (on met à 1 si n'existait pas)
         $attempts = DB::table('users_login')->select('attempts')
             ->where('user_id', $userId)->first();
         if($attempts == null){
@@ -102,6 +113,7 @@ class LoginController extends Controller
             $attempts = $attempts->attempts;
         }
 
+        //Si l'utilisateur n'a pas atteint son maximum on continue
         if($attempts < $this->allowedAttempts) {
             $this->validateLogin($request);
 
@@ -149,7 +161,9 @@ class LoginController extends Controller
             DB::table('users_login')->where('user_id', $userId)->update(['attempts' => $attempts]);
 
             return $this->sendFailedLoginResponse($request);
-        }else{
+        }
+        //Sinon on bloque l'utilisateur avec un message d'erreur custom
+        else{
             return throw ValidationException::withMessages([
                     $this->username() => [trans('auth.blocked')],
             ]);

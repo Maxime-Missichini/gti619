@@ -21,6 +21,10 @@ class ForgotPasswordController extends Controller
 
     use SendsPasswordResetEmails;
 
+    /**
+     * Contrôle si le reset de mots de passe (oublié) est actif
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function showLinkRequestForm()
     {
         $valuestore = Valuestore::make('settings.json');

@@ -16,6 +16,10 @@ class PasswordRule implements Rule
 
     protected $userId;
 
+    /**
+     * On obtient l'utilisateur recherché grâce à l'email renseigné
+     * @param $email
+     */
     public function __construct($email)
     {
         $this->userId = DB::table('users')->select('id')->where('email', $email)->first()->id;;
@@ -23,6 +27,7 @@ class PasswordRule implements Rule
 
     /**
      * Determine if the validation rule passes.
+     * Ici cela permet de vérifier que l'utilisateur n'utilise pas les x derniers mots de passe
      *
      * @param  string  $attribute
      * @param  mixed  $value

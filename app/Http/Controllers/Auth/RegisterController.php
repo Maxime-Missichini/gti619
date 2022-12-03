@@ -45,7 +45,7 @@ class RegisterController extends Controller
 
     /**
      * Get a validator for an incoming registration request.
-     *
+     * Customisé pour y ajouter nos régles de sécurité sur les mots de passe
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */

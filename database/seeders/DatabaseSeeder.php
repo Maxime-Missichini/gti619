@@ -11,13 +11,13 @@ use Illuminate\Support\Facades\DB;
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Rempli la base de donnée lors du php artisan migrate
      *
      * @return void
      */
     public function run()
     {
-        //Creating roles and setting abilities
+        //Création des rôles et des abilities
         DB::table('abilities')->insert([
             'name' => 'see-admin'
         ]);
@@ -57,7 +57,7 @@ class DatabaseSeeder extends Seeder
         $prepose_residentiel = Role::where('name','Prepose_residentiel')->first();
         $prepose_residentiel->allowTo($see_residentiel);
 
-        //Creating users
+        //Création des utilisateurs par défaut
         DB::table('users')->insert([
             'name' => 'Administrateur',
             'email' => 'admin@gmail.com',
@@ -87,6 +87,7 @@ class DatabaseSeeder extends Seeder
         $user1->assignRole($prepose_residentiel);
         $user2->assignRole($prepose_affaire);
 
+        //Création des clients
         DB::table('clients')->insert([
             'first_name' => 'Jean',
             'last_name' => 'Pierre',
