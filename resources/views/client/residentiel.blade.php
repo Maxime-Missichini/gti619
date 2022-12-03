@@ -8,7 +8,7 @@
 @section('content')
     <div>
         <h3>Liste des clients residentiels</h3>
-        <div>
+        <div class="form-box">
             <table>
                 <tr>
                     <th>First name</th>

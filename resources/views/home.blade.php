@@ -3,45 +3,45 @@
 @section('content')
     <div>
         @auth
-            <div>Welcome {{ Auth::user() -> name }}</div>
+            <h3>Welcome {{ Auth::user() -> name }}</h3>
         @else
-            <div>Welcome</div>
+            <h3>Welcome</h3>
         @endauth
         @if(Route::has('login'))
             <div>
                 @auth
-                    <div><a href="{{ url('/home') }}">Home</a></div>
-                    <div>
+                    <div class="box"><a href="{{ url('/home') }}"><p>Home</p></a></div>
+                    <div class="box">
                         <a href="{{ url('/logout') }}"
                            onclick="event.preventDefault();
-                           document.getElementById('logout-form').submit()">Logout</a>
+                           document.getElementById('logout-form').submit()"><p>Logout</p></a>
                     </div>
-                    <div><a href="{{ url('/password/change') }}">Change password</a></div>
+                    <div class="box"><a href="{{ url('/password/change') }}"><p>Change password</p></a></div>
                     <form id="logout-form" action="{{ url('/logout') }}" method="POST">
                         @csrf
                     </form>
                 @else
-                    <div><a href="{{ url('/login') }}">Login</a></div>
+                    <div class="box"><a href="{{ url('/login') }}"><p>Login</p></a></div>
                     @if(Route::has('register'))
-                        <div><a href="{{ url('/register') }}">Register</a></div>
+                        <div class="box"><a href="{{ url('/register') }}"><p>Register</p></a></div>
                     @endif
                 @endauth
             </div>
         @endif
             @auth
                 @can("see-admin")
-                    <div>
-                        <a href="{{ url('/admin') }}">Admin panel</a>
+                    <div class="box">
+                        <a href="{{ url('/admin') }}"><p>Admin panel</p></a>
                     </div>
                 @endcan
                 @can("see-residentiel")
-                        <div>
-                            <a href="{{ url('/residentiel') }}">Clients residentiels</a>
+                        <div class="box">
+                            <a href="{{ url('/residentiel') }}"><p>Clients residentiels</p></a>
                         </div>
                     @endcan
                     @can("see-affaire")
-                        <div>
-                            <a href="{{ url('/affaire') }}">Clients d'affaires</a>
+                        <div class="box">
+                            <a href="{{ url('/affaire') }}"><p>Clients d'affaires</p></a>
                         </div>
                     @endcan
             @endauth

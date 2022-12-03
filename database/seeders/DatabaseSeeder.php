@@ -87,16 +87,135 @@ class DatabaseSeeder extends Seeder
         $user1->assignRole($prepose_residentiel);
         $user2->assignRole($prepose_affaire);
 
-        //Création des clients
+        //Création des clients d'affaire
         DB::table('clients')->insert([
-            'first_name' => 'Jean',
-            'last_name' => 'Pierre',
+            'first_name' => 'Abel',
+            'last_name' => 'Auboisdormant',
             'type' => 'affaire',
         ]);
 
+        //Création des clients
         DB::table('clients')->insert([
-            'first_name' => 'André',
-            'last_name' => 'Ciseaux',
+            'first_name' => 'Adam',
+            'last_name' => 'Troijours',
+            'type' => 'affaire',
+        ]);
+
+        //Création des clients
+        DB::table('clients')->insert([
+            'first_name' => 'Adrienne',
+            'last_name' => 'Kepoura',
+            'type' => 'affaire',
+        ]);
+
+        //Création des clients
+        DB::table('clients')->insert([
+            'first_name' => 'Alain',
+            'last_name' => 'Provist',
+            'type' => 'affaire',
+        ]);
+
+        //Création des clients
+        DB::table('clients')->insert([
+            'first_name' => 'Alain',
+            'last_name' => 'Verse',
+            'type' => 'affaire',
+        ]);
+
+        //Création des clients
+        DB::table('clients')->insert([
+            'first_name' => 'Ali',
+            'last_name' => 'Gator',
+            'type' => 'affaire',
+        ]);
+
+        //Création des clients
+        DB::table('clients')->insert([
+            'first_name' => 'Amandine',
+            'last_name' => 'Ozaur',
+            'type' => 'affaire',
+        ]);
+
+        //Création des clients
+        DB::table('clients')->insert([
+            'first_name' => 'Andy',
+            'last_name' => 'Capé',
+            'type' => 'affaire',
+        ]);
+
+        //Création des clients
+        DB::table('clients')->insert([
+            'first_name' => 'Annie',
+            'last_name' => 'Versaire',
+            'type' => 'affaire',
+        ]);
+
+        //Création des clients
+        DB::table('clients')->insert([
+            'first_name' => 'Aubin',
+            'last_name' => 'Sahalor',
+            'type' => 'affaire',
+        ]);
+
+        //Clients résidentiels
+
+        DB::table('clients')->insert([
+            'first_name' => 'Barack',
+            'last_name' => 'Afritt',
+            'type' => 'residentiel',
+        ]);
+
+        DB::table('clients')->insert([
+            'first_name' => 'Beth',
+            'last_name' => 'Rave',
+            'type' => 'residentiel',
+        ]);
+
+        DB::table('clients')->insert([
+            'first_name' => 'Bienvenue',
+            'last_name' => 'Parminou',
+            'type' => 'residentiel',
+        ]);
+
+        DB::table('clients')->insert([
+            'first_name' => 'Camille',
+            'last_name' => 'Zole',
+            'type' => 'residentiel',
+        ]);
+
+        DB::table('clients')->insert([
+            'first_name' => 'Céline',
+            'last_name' => 'Évitable',
+            'type' => 'residentiel',
+        ]);
+
+        DB::table('clients')->insert([
+            'first_name' => 'Charles',
+            'last_name' => 'Ottofraize',
+            'type' => 'residentiel',
+        ]);
+
+        DB::table('clients')->insert([
+            'first_name' => 'Cicéron',
+            'last_name' => 'Cépacaré',
+            'type' => 'residentiel',
+        ]);
+
+        DB::table('clients')->insert([
+            'first_name' => 'Djamal',
+            'last_name' => 'Alatête',
+            'type' => 'residentiel',
+        ]);
+
+        DB::table('clients')->insert([
+            'first_name' => 'Élie',
+            'last_name' => 'Coptère',
+            'type' => 'residentiel',
+        ]);
+
+        DB::table('clients')->insert([
+            'first_name' => 'Èva',
+            'last_name' => 'Skacélagueul',
             'type' => 'residentiel',
         ]);
     }

@@ -9,9 +9,11 @@
 </head>
 <body>
 
-<div class="container">
+<div>
     @yield('content')
 </div>
+
+<footer><a href="https://github.com/Maxime-Missichini/gti619">https://github.com/Maxime-Missichini/gti619</a></footer>
 
 </body>
 </html>

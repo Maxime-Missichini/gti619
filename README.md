@@ -24,3 +24,4 @@ Pour accéder à Mailhog et Mysql, il vous suffit de regarder les informations s
 ## Erreurs
 - Le package php8.0 n'est pas trouvé (remplacer 8.1 par 8.0): https://www.cloudbooklet.com/how-to-install-or-upgrade-php-8-1-on-ubuntu-20-04/
 - `composer install` - Vous n'avez pas la bonne version de php ou bien vous n'avez pas installé le module xml et mysql.
+- Erreur concernant un l'accès à un fichier dans le répertoire /storage - `chmod -R 777 /storage`
