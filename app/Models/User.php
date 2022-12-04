@@ -54,6 +54,11 @@ class User extends Authenticatable
     static public $gridSize = 9;
 
     /**
+     * @var int
+     */
+    static public $challengeSize = 3;
+
+    /**
      * Renvoie les rôles d'un utilisateur
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */

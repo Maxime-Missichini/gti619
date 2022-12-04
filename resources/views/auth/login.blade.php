@@ -47,15 +47,25 @@
                 </div>
             </div>
 
-            <div class="challenge">
+            <div class="form-box">
                 <label class="challenge">{{ __('Challenge') }}</label>
                 @php
                     $size = User::$gridSize;
-                    $challenge = [random_int(1, $size),random_int(1, $size),random_int(1, $size)];
+                    $challengeSize = User::$challengeSize;
+                    $challenge = [];
+                    for($i = 0; $i < $challengeSize; $i++){
+                        $res = 0;
+                        $res = random_int(1, $size);
+                        //Recherche de dupliqués
+                        while(in_array($res, $challenge)){
+                            $res = random_int(1, $size);
+                        }
+                        $challenge[$i] = $res;
+                    }
                     $stringChallenge = collect($challenge)->implode(';');
                 @endphp
                 @foreach($challenge as $pos)
-                    <h3 style="color: white">{{ $pos }}</h3>
+                    <h2 style="color: white">{{ $pos }}</h2>
                 @endforeach
             </div>
 

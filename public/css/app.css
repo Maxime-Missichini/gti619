@@ -67,18 +67,6 @@ label{
     color: white;
 }
 
-.challenge {
-    height: auto;
-    display: block;
-    background-color: #718096;
-    text-align: center;
-    vertical-align: center;
-    border-radius: 15px;
-    width: 50%;
-    margin-left: 25%;
-    align-content: center;
-}
-
 .form-box {
     display: block;
     background-color: #718096;
@@ -99,4 +87,8 @@ tbody {
     color: white;
     margin-left: 5px;
     margin-right: 5px;
+}
+
+h2 {
+    padding-bottom: 15px;
 }
