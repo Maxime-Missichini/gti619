@@ -1,7 +1,7 @@
 # GTI619 - Guide d'installation
 
 ## Pré-requis : 
-- WSL sous Windows
+- WSL pour Windows + Windows
 - PHP 8.0.25 (<code>sudo apt install php8.0</code>) <b>UNIQUEMENT</b>
 - php8.0-xml, php8.0-mysql (php8.0-curl pour télécharger plus vite les dépendances)
 - docker desktop et composer
