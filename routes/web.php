@@ -68,6 +68,12 @@ Route::get('/admin', function () {
 })->middleware('can:see-admin');
 
 /**
+ * Route pour créer un utilisateur avec un rôle en tant qu'admin
+ */
+Route::get('/createUser', 'App\Http\Controllers\CreateUserController@createUser')
+    ->middleware('can:see-admin','password.confirm');
+
+/**
  * Route pour Caddy afin d'activer HTTPS
  */
 Route::get('/caddy-check', 'App\Http\Controllers\CaddyController@check');
